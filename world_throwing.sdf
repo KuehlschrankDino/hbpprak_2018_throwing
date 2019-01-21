@@ -21,7 +21,7 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <light name="sun" type="directional">
-      <pose frame="">-11.8208 -19.3843 17.2198 0 0 0</pose>
+      <pose frame="">-11.8208 -19.3843 17.2198 0 -0 0</pose>
       <diffuse>0.7 0.7 0.7 1</diffuse>
       <specular>0.2 0.2 0.2 1</specular>
       <direction>0.3698 0.4 -0.5</direction>
@@ -33,12 +33,86 @@
       </attenuation>
       <cast_shadows>1</cast_shadows>
     </light>
+    <state world_name="default">
+      <sim_time>0 0</sim_time>
+      <real_time>0 0</real_time>
+      <wall_time>1545231414 385103053</wall_time>
+      <iterations>0</iterations>
+      <model name="cylinder">
+        <pose frame="">-0.378414 -0.253816 1.12014 0.001566 -0.00162 0.001754</pose>
+        <scale>1 1 1</scale>
+        <link name="cylinder">
+          <pose frame="">-0.378414 -0.253816 1.12014 0.001566 -0.00162 0.001754</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name="nrppanel">
+        <pose frame="">-3.84038 3.49072 -1.79562 0 -0 1.55</pose>
+        <scale>1 1 1</scale>
+        <link name="nrppanel::body">
+          <pose frame="">-3.84038 3.49072 -1.79562 0 -0 1.55</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name="pingpongtable_0">
+        <pose frame="">3.2386 1.81975 0.04 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name="pingpongtable::body">
+          <pose frame="">3.2386 1.81975 0.04 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name="plane">
+        <pose frame="">0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name="link">
+          <pose frame="">0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name="directionallight_0">
+        <pose frame="">1e-06 0.335519 1.56265 0 -0 0</pose>
+      </light>
+      <light name="directionallight_1">
+        <pose frame="">1.04139 3.33256 0.54 0 -0 0</pose>
+      </light>
+      <light name="directionallight_2">
+        <pose frame="">-0.041419 3.23313 0.54 0 -0 0</pose>
+      </light>
+      <light name="pointlight_0">
+        <pose frame="">-0.100821 -0.242668 1.31258 0 -0 0</pose>
+      </light>
+      <light name="sun">
+        <pose frame="">-11.8208 -19.3843 17.2198 0 -0 0</pose>
+      </light>
+    </state>
+    <light name="directionallight_0" type="directional">
+      <pose frame="">1e-06 0.335519 1.56265 0 -0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <direction>0 0 -1</direction>
+      <attenuation>
+        <range>20</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>0</cast_shadows>
+    </light>
     <model name="nrppanel">
       <static>1</static>
       <static>1</static>
       <link name="nrppanel::body">
         <collision name="nrppanel">
-          <pose frame="">0 0 0 0 0 0</pose>
+          <pose frame="">0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
               <uri>model://nrp_panel/meshes/nrppanel-coll.dae</uri>
@@ -75,15 +149,16 @@
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
         <gravity>1</gravity>
-        <pose frame="">0 0 0 0 0 0</pose>
+        <pose frame="">0 0 0 0 -0 0</pose>
       </link>
-      <pose frame="">-3.84038 3.49072 -1.79562 0 0 1.55</pose>
+      <pose frame="">-3.84038 3.49072 -1.79562 0 -0 1.55</pose>
+      <pose frame="">-3.84038 3.49072 -1.79562 0 -0 1.55</pose>
     </model>
     <model name="plane">
       <static>1</static>
       <link name="link">
         <collision name="collision">
-          <pose frame="">0 0 0 0 0 0</pose>
+          <pose frame="">0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
               <uri>model://empty_world/meshes/emptyworldground.dae</uri>
@@ -109,7 +184,7 @@
         </collision>
         <visual name="visual">
           <cast_shadows>0</cast_shadows>
-          <pose frame="">0 0 0 0 0 0</pose>
+          <pose frame="">0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
               <uri>model://empty_world/meshes/emptyworldground.dae</uri>
@@ -121,7 +196,146 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame="">0 0 0 0 0 0</pose>
+      <pose frame="">0 0 0 0 -0 0</pose>
+      <pose frame="">0 0 0 0 -0 0</pose>
+    </model>
+    <model name="cylinder">
+      <static>0</static>
+      <link name="cylinder">
+        <pose frame="">0 0 0 0 -0 0</pose>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.000129</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000129</iyy>
+            <iyz>0</iyz>
+            <izz>3.78e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>0.0275</radius>
+              <length>0.115</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.0275</radius>
+              <length>0.115</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Blue</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame="">-0.378414 -0.253816 1.12014 0.001566 -0.00162 0.001754</pose>
+      <pose frame="">-0.37797 -0.25321 1.12015 0 -0 0</pose>
+    </model>
+    <light name="directionallight_1" type="directional">
+      <pose frame="">1.04139 3.33256 0.54 0 -0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <direction>0 0 -1</direction>
+      <attenuation>
+        <range>20</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+    </light>
+    <light name="directionallight_2" type="directional">
+      <pose frame="">-0.041419 3.23313 0.54 0 -0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <direction>0 0 -1</direction>
+      <attenuation>
+        <range>20</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+    </light>
+    <light name="pointlight_0" type="point">
+      <pose frame="">-0.100821 -0.242668 1.31258 0 -0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <attenuation>
+        <range>20</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>0 0 -1</direction>
+    </light>
+    <model name="pingpongtable_0">
+      <pose frame="">3.2386 1.81975 0.04 0 -0 0</pose>
+      <static>1</static>
+      <link name="pingpongtable::body">
+        <collision name="pingpongtable-coll">
+          <pose frame="">0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://pingpongtable/meshes/pingpongtable-coll.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="pingpongtable">
+          <cast_shadows>1</cast_shadows>
+          <geometry>
+            <mesh>
+              <uri>model://pingpongtable/meshes/pingpongtable.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+        <pose frame="">0 0 0 0 -0 0</pose>
+      </link>
     </model>
   </world>
 </sdf>
