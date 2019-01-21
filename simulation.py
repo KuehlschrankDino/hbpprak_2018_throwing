@@ -61,7 +61,7 @@ circuit = sensors + actors'''
 
 
     def __init__(self):
-        self.exp_name = 'template_manipulation_0'
+        self.exp_name = 'cleanThrowing'
         self.sim = None
         self.vc = None
         self.simulation_finished = False
