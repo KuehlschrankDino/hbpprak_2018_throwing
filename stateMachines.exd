@@ -102,7 +102,7 @@ class NewCylinderState(State):
         return 'success'
 
 class FlyingCylinderState(State):
-    def __init__(self, cylinder_name, rate=1., outcomes=['success', 'aborted'], max_hit_duration=20):
+    def __init__(self, cylinder_name, rate=100, outcomes=['success', 'aborted'], max_hit_duration=15):
         super(FlyingCylinderState, self).__init__(outcomes=outcomes)
         self._rate = rospy.Rate(rate)
         self._cylinder_name = cylinder_name
@@ -110,15 +110,22 @@ class FlyingCylinderState(State):
                                          GetModelState, persistent=True)
         self._delete_proxy = ServiceProxy('/gazebo/delete_model',
                                          DeleteModel, persistent=True)
-        self._distance_topic = rospy.Publisher('/cylinder_distance', Float32, queue_size=1)
-        self.max_hit_duration=20
+        self._distance_topic = rospy.Publisher('/cylinder_distance', Float32, queue_size=10)
+        self._height_topic = rospy.Publisher('/cylinder_height', Float32, queue_size=1)
+        self.max_hit_duration=15
+        
+
 
     def execute(self, userdata):
         start_time = rospy.Time.now()
-        while not self.cylinder_lower_than(0.2) and (rospy.Time.now() - start_time) < rospy.Duration(self.max_hit_duration):
-            self._rate.sleep()
+        
         pub = rospy.Publisher('/state', String, queue_size=1)
         pub.publish("thrown")
+        while not self.cylinder_lower_than(0.2) and (rospy.Time.now() - start_time) < rospy.Duration(self.max_hit_duration):
+            cylinder_height = self.get_cylinder_height()
+            if(cylinder_height != -1000):
+                self._height_topic.publish(Float32(cylinder_height))
+            self._rate.sleep()
         cylinder_pos = self.get_cylinder_distance()
         clientLogger.advertise("Cylinder distance: {}".format(cylinder_pos))
         self._distance_topic.publish(Float32(cylinder_pos))
@@ -126,12 +133,12 @@ class FlyingCylinderState(State):
         return 'success'
 
     def get_cylinder_distance(self):
-      try:
-          current_cylinder_state = self._state_proxy(cylinder_name, "world")
-      except rospy.ServiceException as exc:
-          clientLogger.error(str(exc))
-          return -1000.0
-      return -current_cylinder_state.pose.position.y
+        try:
+            current_cylinder_state = self._state_proxy(cylinder_name, "world")
+        except rospy.ServiceException as exc:
+            clientLogger.error(str(exc))
+            return -1000.0
+        return -current_cylinder_state.pose.position.y
 
     def cylinder_lower_than(self, z_threshold):
         try:
@@ -140,6 +147,14 @@ class FlyingCylinderState(State):
             clientLogger.info(str(exc))
             return False
         return current_cylinder_state.pose.position.z < z_threshold
+    
+    def get_cylinder_height(self): 
+        try:
+            current_cylinder_state = self._state_proxy(cylinder_name, "world")
+        except rospy.ServiceException as exc:
+            clientLogger.error(str(exc))
+            return -1000.0
+        return current_cylinder_state.pose.position.z
 
 
 with sm:
