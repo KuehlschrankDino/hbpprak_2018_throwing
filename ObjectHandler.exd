@@ -102,7 +102,7 @@ class NewCylinderState(State):
         return 'success'
 
 class FlyingCylinderState(State):
-    def __init__(self, cylinder_name, rate=100, outcomes=['success', 'aborted'], max_hit_duration=15):
+    def __init__(self, cylinder_name, rate=1, outcomes=['success', 'aborted'], max_hit_duration=15):
         super(FlyingCylinderState, self).__init__(outcomes=outcomes)
         self._rate = rospy.Rate(rate)
         self._cylinder_name = cylinder_name

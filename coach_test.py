@@ -2,6 +2,10 @@ import time
 from simulation import ThrowingSim
 import numpy as np
 import os
+import rospy
+from std_msgs.msg import Int32, Float32, String
+
+startnew = 1
 
 def mutatePopulation(pop, keep= 3, lr = 0.5):
     new_weights = np.empty((len(pop), 3,3))
@@ -37,9 +41,12 @@ def testPopulation(sim, weights):
     for i in range(weights.shape[0]):
         
         try:
-            distance = abs(sim.run(weights[i]))
+            startnew = 1
+            while(startnew == 1):
+                startnew=0
+                distance = abs(sim.run(weights[i]))
             # print("instance: {}, distance: {}".format(i, distance))
-
+            
             pop.append({
             'weights': weights[i],
             'distance': distance
@@ -52,14 +59,20 @@ def testPopulation(sim, weights):
 def key_func(e):
     print(e['distance'])
     return e['distance']
-
+def getStartNewCallback(data):
+    if(data.data== 1):
+        startnew = 1
+    else :
+        startnew = 0
+        
 def main():
     sim = ThrowingSim()
     print(sim.initialized())
     populationSize = 8
-    num_generations = 5
+    num_generations = 500
     best_distance = 0
     pop = []
+    startnew = rospy.Subscriber("/start_sim_new", Int32, getStartNewCallback, queue_size=1)
     if(os.path.isfile("bestweights.npy") and os.path.isfile("distance.npy")):
         best_distance = float(np.load("distance.npy"))
         pop.append({
