@@ -8,7 +8,7 @@ distance_file = "distance_{}_{}.npy.".format(WEIGHT_SHAPE[0], WEIGHT_SHAPE[1])
 weights_file = "weights_{}_{}.npy".format(WEIGHT_SHAPE[0], WEIGHT_SHAPE[1])
 
 def mutatePopulation(pop, keep= 3, lr = 0.5):
-    new_weights = np.empty((len(pop), 3,3))
+    new_weights = np.empty((len(pop), WEIGHT_SHAPE[0], WEIGHT_SHAPE[0]))
     for i, p in enumerate(pop):
         new_weights[i, ] = p['weights']
         if(i < 3):

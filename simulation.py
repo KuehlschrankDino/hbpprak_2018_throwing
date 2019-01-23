@@ -9,37 +9,6 @@ import rospy
 from std_msgs.msg import Float32, Int32
 import numpy as np
 
-def numpyArrayToInitStr(array):
-    # array: 1- or 2-dimentional numpy array
-    # return value: initialization string to create array
-    if len(array.shape) == 1:
-        string = '['
-        for j in range(3):
-            string += '['
-            for i in range(3):
-                string += str(array[j*3 + i]) + ','
-            if string[-1] == ',':
-                string = string[:-1]
-            string += '],'
-        if string[-1] == ',':
-            string = string[:-1]
-        string += ']'
-        return string
-    elif len(array.shape) == 2:
-        string = '['
-        for row in array:
-            string += '['
-            for element in row:
-                string += str(element) + ','
-            if string[-1] == ',':
-                string = string[:-1]
-            string += '],'
-        if string[-1] == ',':
-            string = string[:-1]
-        string += ']'
-        return string
-    else:
-        return ''
 
 class ThrowingSim():
     BRAIN_TEMPLATE = '''#-*- coding: utf-8 -*-
@@ -151,11 +120,9 @@ circuit = sensors + actors'''
         print("setting brain")
         #setting experiment
         brain = self.BRAIN_TEMPLATE.format(weights.shape[0], weights.shape[1], np.array2string(weights,separator=","))
-        #brain = self.BRAIN_TEMPLATE.format(weights.shape[0], weights.shape[1], numpyArrayToInitStr(weights))
         self.sim.edit_brain(brain)
         
         try:
-            # self.sim.register_status_callback(self.getStatusCallback())
             self.distanceSub = rospy.Subscriber("/cylinder_distance", Float32, self.getDistanceCallback(), queue_size=1)
             self.simFinSub = rospy.Subscriber("/sim_finished", Int32, self.getSimFinshedCallback(), queue_size=1)
             #self.restartTry = rospy.Subscriber("/start_sim_new", Int32, self.getReStartSimCallback(), queue_size=1)
