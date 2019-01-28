@@ -104,7 +104,7 @@ def simple_move_robot(t, output_1, output_0, output_2, output_3, hand_index_prox
                 last_action_time = act_time
                 return sebbel_state, last_action_time
         if (sebbel_state == 4): 
-            if (act_time - last_action_time) > 1: 
+            if (act_time - last_action_time) > 2: 
                 reset_pub = rospy.Publisher("/sim_finished", Int32, queue_size=1)
                 reset_pub.publish(1)
                 clientLogger.info("ENDE BANANE")
