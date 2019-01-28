@@ -14,7 +14,6 @@ def sensor2brain(t, input_2, input_1, input_0):
                                          GetModelState, persistent=True)
             try:
                 current_cylinder_state = state_proxy("cylinder", "world")
-                clientLogger.info("input_0.amplitude:{}".format(current_cylinder_state.pose.position.x))
                 input_0.amplitude = current_cylinder_state.pose.position.x
                 input_1.amplitude = current_cylinder_state.pose.position.y
                 input_2.amplitude = current_cylinder_state.pose.position.z

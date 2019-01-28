@@ -1,26 +1,34 @@
+
 import time
 from simulation import ThrowingSim
 import numpy as np
 import os
 
-WEIGHT_SHAPE = [3, 4]
+WEIGHT_SHAPE = [3, 4]			
 distance_file = "distance_{}_{}.npy.".format(WEIGHT_SHAPE[0], WEIGHT_SHAPE[1])
 weights_file = "weights_{}_{}.npy".format(WEIGHT_SHAPE[0], WEIGHT_SHAPE[1])
+decay = 0.01
+act_generation = 0
 
-def mutatePopulation(pop, keep= 3, lr = 0.5):
-    new_weights = np.empty((len(pop), WEIGHT_SHAPE[0], WEIGHT_SHAPE[0]))
+def mutatePopulation(pop, keep=3, lr=0.5):
+    new_weights = np.empty((len(pop), WEIGHT_SHAPE[0], WEIGHT_SHAPE[1]))
+	
+    lr *= act_generation * (1- decay)
     for i, p in enumerate(pop):
-        new_weights[i, ] = p['weights']
+        new_weights[i, ] = pop[-1]['weights']
         if(i < 3):
-            for ii in range(3): #todo: maybe adjust amount of weights to be changed to WEIGHT_SHAPE
+            for ii in range(3): 
                 x = np.random.randint(WEIGHT_SHAPE[0])
                 y = np.random.randint(WEIGHT_SHAPE[1])
-                if (i < 2 ):
-                    new_weights[i, ] = p['weights'][x,y] +  (pop[-1]['weights'][x,y] - p['weights'][x,y]) * lr
-                else:
-                    new_weights[i, ] = p['weights'][x,y] + ( pop[-2]['weights'][x,y] - p['weights'][x,y]) * lr
+                new_weights[i,x,y] += np.random.rand(0,1) * np.power(-1, np.random.randint(2)) * lr
+        elif (i<5):
+            new_weights[i, ] = pop[-2]['weights']
+            for ii in range(3): 
+                x = np.random.randint(WEIGHT_SHAPE[0])
+                y = np.random.randint(WEIGHT_SHAPE[1])
+                new_weights[i,x,y] += np.random.rand(0,1) * np.power(-1, np.random.randint(2)) * lr 
         else: 
-            new_weights[i, ] = np.random.rand(WEIGHT_SHAPE[0],WEIGHT_SHAPE[1]) * 5
+            new_weights[i, ] = np.random.rand(WEIGHT_SHAPE[0], WEIGHT_SHAPE[1]) * 5
     new_pop = []
     new_pop.append(pop[-1])
     new_pop.append(pop[-2])
@@ -29,7 +37,7 @@ def mutatePopulation(pop, keep= 3, lr = 0.5):
 
 
 
-def initPopulation(count=1, scale=5):
+def initPopulation(count=1, scale=2):
     # count (int): size of population
     # scale (float): upper bound for population values
     # return value (numpy array, shape=[count, 9])
@@ -37,11 +45,10 @@ def initPopulation(count=1, scale=5):
 
 def testPopulation(sim, weights):
     pop = []
-    
     for i in range(weights.shape[0]):
         distance = None
         while distance is None:
-            print("jajajajajajja")
+            print("start simulation..")
             distance = sim.run(weights[i])
             if(distance is None):
                 print("#################################RESTARTING SIM!!")
@@ -79,6 +86,7 @@ def main():
             })
     weights = initPopulation(populationSize, 5)
     for i in range(num_generations):
+        act_generation = i;
         print("Starting generation {}".format(i))
         pop.extend(testPopulation(sim, weights))
         print(len(pop))
