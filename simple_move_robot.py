@@ -1,4 +1,5 @@
 # Imported Python Transfer Function
+@nrp.MapSpikeSink("output_3", nrp.brain.actors[3], nrp.population_rate)
 @nrp.MapVariable("go_to_init", initial_value=0)
 @nrp.MapVariable("cylinder_height", initial_value=1.12015)
 @nrp.MapVariable("sebbel_time", initial_value=0)
@@ -24,7 +25,7 @@
 @nrp.MapRobotPublisher("hand_index_distal", Topic("/robot/hand_Index_Finger_Distal/cmd_pos", std_msgs.msg.Float64))
 @nrp.MapRobotPublisher("hand_index_proximal", Topic("/robot/hand_Index_Finger_Proximal/cmd_pos", std_msgs.msg.Float64))
 @nrp.Neuron2Robot()
-def simple_move_robot(t, output_1, output_0, output_2, hand_index_proximal, hand_index_distal, hand_middle_proximal, hand_middle_distal, hand_ring_proximal, hand_ring_distal, hand_pinky_proximal, hand_pinky_distal, hand_thumb_flexion, hand_thumb_distal, arm_1, arm_2, arm_3, arm_4, arm_5, arm_6, sebbel_time, sebbel_state, last_action_time, cylinder_height, go_to_init):
+def simple_move_robot(t, output_1, output_0, output_2, output_3, hand_index_proximal, hand_index_distal, hand_middle_proximal, hand_middle_distal, hand_ring_proximal, hand_ring_distal, hand_pinky_proximal, hand_pinky_distal, hand_thumb_flexion, hand_thumb_distal, arm_1, arm_2, arm_3, arm_4, arm_5, arm_6, sebbel_time, sebbel_state, last_action_time, cylinder_height, go_to_init):
     import hbp_nrp_excontrol.nrp_states as states
     from smach import StateMachine
     from smach.state import State
@@ -103,7 +104,7 @@ def simple_move_robot(t, output_1, output_0, output_2, hand_index_proximal, hand
                 last_action_time = act_time
                 return sebbel_state, last_action_time
         if (sebbel_state == 4): 
-            if (act_time - last_action_time) > 2: 
+            if (act_time - last_action_time) > 1: 
                 reset_pub = rospy.Publisher("/sim_finished", Int32, queue_size=1)
                 reset_pub.publish(1)
                 clientLogger.info("ENDE BANANE")
@@ -146,9 +147,14 @@ def simple_move_robot(t, output_1, output_0, output_2, hand_index_proximal, hand
     elif (sebbel_state.value == 99): 
         arm_2.send_message(std_msgs.msg.Float64(0.95))        
     elif(sebbel_state.value == 3):
-        arm_2.send_message(std_msgs.msg.Float64(-1.0 + output_1.rate / 50.0))
-        arm_3.send_message(std_msgs.msg.Float64(-1.0 + output_2.rate / 50.0))
-        grasp(-1.0 + output_2.rate / 50.0)
+        clientLogger.info("output_0:{}".format(output_0.rate))
+        clientLogger.info("output_1:{}".format(output_1.rate))
+        clientLogger.info("output_2:{}".format(output_2.rate))
+        clientLogger.info("output_3:{}".format(output_3.rate))
+        arm_2.send_message(std_msgs.msg.Float64(-5.0 + output_1.rate / 6.0))
+        arm_3.send_message(std_msgs.msg.Float64(-5.0 + output_2.rate / 6.0))
+        arm_5.send_message(std_msgs.msg.Float64(-5.0 + output_3.rate / 6.0))
+        grasp(output_0.rate / 50.0)
     elif (sebbel_state.value == 4): 
         #reinitiate
         grasp(0)
