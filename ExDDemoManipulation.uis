@@ -52,10 +52,11 @@
             "reorderEnabled": true,
             "title": "",
             "height": 66.66666666666667,
+            "width": 52.94117647058824,
             "content": [
               {
                 "type": "stack",
-                "width": 35.22352330623599,
+                "width": 37.321294206170045,
                 "height": 99.99999999999999,
                 "isClosable": true,
                 "reorderEnabled": true,
@@ -81,27 +82,62 @@
                 ]
               },
               {
-                "type": "stack",
+                "type": "column",
                 "isClosable": true,
                 "reorderEnabled": true,
                 "title": "",
-                "activeItemIndex": 0,
-                "width": 64.77647669376402,
+                "width": 62.67870579382995,
                 "content": [
                   {
-                    "type": "component",
-                    "title": "TF Editor",
-                    "id": "transfer-function-editor",
-                    "componentName": "angularModuleComponent",
-                    "componentState": {
-                      "module": "exdFrontendApp",
-                      "angularDirective": "<transfer-function-editor />",
-                      "singleton": true
-                    },
-                    "pwidth": 900,
-                    "pheight": 700,
+                    "type": "stack",
                     "isClosable": true,
-                    "reorderEnabled": true
+                    "reorderEnabled": true,
+                    "title": "",
+                    "activeItemIndex": 0,
+                    "width": 100,
+                    "height": 72.58064516129032,
+                    "content": [
+                      {
+                        "type": "component",
+                        "title": "Brain Editor",
+                        "id": "pynn-editor",
+                        "componentName": "angularModuleComponent",
+                        "componentState": {
+                          "module": "exdFrontendApp",
+                          "angularDirective": "<pynn-editor />",
+                          "singleton": true
+                        },
+                        "pwidth": 800,
+                        "pheight": 900,
+                        "isClosable": true,
+                        "reorderEnabled": true
+                      }
+                    ]
+                  },
+                  {
+                    "type": "stack",
+                    "isClosable": true,
+                    "reorderEnabled": true,
+                    "title": "",
+                    "activeItemIndex": 0,
+                    "height": 27.41935483870968,
+                    "content": [
+                      {
+                        "type": "component",
+                        "title": "Log Console",
+                        "id": "log-console",
+                        "componentName": "angularModuleComponent",
+                        "componentState": {
+                          "module": "exdFrontendApp",
+                          "angularDirective": "<log-console />",
+                          "singleton": true
+                        },
+                        "pwidth": 400,
+                        "pheight": 300,
+                        "isClosable": true,
+                        "reorderEnabled": true
+                      }
+                    ]
                   }
                 ]
               }
