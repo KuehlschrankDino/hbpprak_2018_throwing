@@ -11,9 +11,9 @@ sim.setup(timestep=0.1, min_delay=0.1, max_delay=20.0, threads=1, rng_seeds=[123
 
 sensors = sim.Population(3, cellclass=sim.IF_curr_exp())
 actors = sim.Population(4, cellclass=sim.IF_curr_exp())
-sim.Projection(sensors, actors, sim.AllToAllConnector(), sim.StaticSynapse(weight=[[ 3.00731051,  2.9136005 ,  1.58271879,  2.49663017],
-       [ 0.23435238,  3.60735157,  3.51980248,  3.84681013],
-       [ 2.26153034,  4.61704958,  1.12518098,  3.28715384]]))
+sim.Projection(sensors, actors, sim.AllToAllConnector(), sim.StaticSynapse(weight=[[ 4.11461461,  2.41755365,  1.01574498,  2.65863267],
+       [ 0.54659679,  0.69951996,  4.73606566,  1.7634229 ],
+       [ 3.64337662,  1.2035121 ,  2.13919966,  0.13242723]]))
 
 circuit = sensors + actors
 

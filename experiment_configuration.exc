@@ -1,7 +1,7 @@
 <ns1:ExD 
   xmlns:ns1="http://schemas.humanbrainproject.eu/SP10/2014/ExDConfig" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <ns1:name>Clean Throwing</ns1:name>
+  <ns1:name>2018 HBP Praktikum Throwing Experiment</ns1:name>
   <ns1:thumbnail>hbpprak_2018.png</ns1:thumbnail>
   <ns1:description>The schunk LWA4P arm should learn how to throw objects away from the table.</ns1:description>
   <ns1:tags>hollie arm manipulation demo fzi praktikum robotics</ns1:tags>

@@ -47,25 +47,22 @@ def testPopulation(sim, weights):
     pop = []
     for i in range(weights.shape[0]):
         distance = None
-        while distance is None:
+        counter = 0
+        while distance is None and counter < 2:
             print("start simulation..")
             distance = sim.run(weights[i])
             if(distance is None):
                 print("#################################RESTARTING SIM!!")
-                sim.stopSim()
-                time.sleep(3)
+                
+                counter = counter + 1
             else:
                 distance = abs(distance)
+            time.sleep(3)
             
         pop.append({
         'weights': weights[i],
         'distance': distance
         })
-        try:
-            pass
-
-        except:
-            sim.stopSim()
 
     return pop
 
@@ -76,7 +73,7 @@ def key_func(e):
 def main():
     sim = ThrowingSim()
     print(sim.initialized())
-    populationSize = 2
+    populationSize = 4
     num_generations = 5
     best_distance = 0
     pop = []
