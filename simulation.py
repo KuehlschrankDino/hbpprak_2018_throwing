@@ -72,7 +72,7 @@ circuit = sensors + actors'''
             print("#################DISTANCE RECEIVED#################")
             print(data.data)
             if distance > self.distance:
-                self.sim.pause()
+                self.stopSim()
                 self.simulation_finished = True
                 self.distance = distance
         return distanceCallback
@@ -83,7 +83,7 @@ circuit = sensors + actors'''
             if(data.data == 1):
                 self.counter = self.counter +1
                 print("#################SIMULATION TIMEOUT#################",  self.counter)
-                self.sim.pause()
+                self.stopSim()
                 self.simulation_finished = True
         return simFinished
     
@@ -91,6 +91,7 @@ circuit = sensors + actors'''
         def restartSimCB(data):
             if (data.data == 1):
                 print("INITIATE RESET")
+                self.stopSim()
                 self.restart = True
                 self.simulation_finished = True
         return restartSimCB

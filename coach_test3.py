@@ -52,6 +52,8 @@ def testPopulation(sim, weights):
             distance = sim.run(weights[i])
             if(distance is None):
                 print("#################################RESTARTING SIM!!")
+                sim.stopSim()
+                time.sleep(3)
             else:
                 distance = abs(distance)
             
