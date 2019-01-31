@@ -1,10 +1,14 @@
 import time
-from std_msgs.msg import Float32
 import rospy
 import logging
-from brain_strings import BRAIN_SIMPLE
-from hbp_nrp_virtual_coach.virtual_coach import VirtualCoach
+import subprocess
 import numpy as np
+from std_msgs.msg import Float32
+from hbp_nrp_virtual_coach.virtual_coach import VirtualCoach
+
+from brain_strings import BRAIN_SIMPLE
+
+
 
 class ThrowingExperiment(object):
     
@@ -60,8 +64,9 @@ class ThrowingExperiment(object):
             try:
                 self.sim = self.vc.launch_experiment('hbpprak_2018_throwing')
             except:
-                print("COULD NOT LOAD EXPERIMENT")
-                time.sleep(1)
+                print("COULD NOT LOAD EXPERIMENT.")
+                time.sleep(10)
+                self.sim = self.vc.launch_experiment('hbpprak_2018_throwing')
             time.sleep(2)
             try:
                 brain = self.BRAIN_TEMPLATE.format(weight.shape[0], weight.shape[1], np.array2string(weight,separator=","))
@@ -80,7 +85,7 @@ class ThrowingExperiment(object):
             self.wait_condition(1500, lambda x: x['simulationTime'] == self.simulation_time)
             self.sim.pause()
             if(self.distance_received):
-                print("Instance {}, Distance: {}".format(i, self.distances[-1]))
+                print("Instance {}, Distance: {}\n".format(i, self.distances[-1]))
             else:
                 self.distances.append(0)
             self.sim.stop()
