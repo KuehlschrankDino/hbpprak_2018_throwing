@@ -44,15 +44,14 @@ class ThrowingExperiment(object):
 
         def key_func(e):
             return e['distance']
-        print(len(self.distances))
+
         pop = []
         for i, distance in enumerate(self.distances):
-            print(i)
             pop.append({
                 'weights': weights[i],
                 'distance': distance
                 })
-        pop.sort(key=key_func)
+        pop.sort(key=key_func, reverse=True)
         return pop
 
     def run_experiment(self, weights):
