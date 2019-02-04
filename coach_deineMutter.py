@@ -17,10 +17,10 @@ from simulation import ThrowingExperiment
 
 #experiments settings
 WEIGHT_SHAPE = [3, 4]	
-N_GENERATIONS = 10
+N_GENERATIONS = 40
 POPULATION_SIZE = 20
 LR_DECAY = 0.99
-LR = 0.5
+LR = 0.8
 WEIGHT_SCALE = 5
 
 def mutatePopulation(pop):
@@ -78,13 +78,54 @@ def parse_args():
                         required = False,
                         type = str,
                         default="")
+    parser.add_argument('--test_dir',
+                    help='Output directory of population which you want to test',
+                    required = False,
+                    type = str,
+                    default="")
     args = parser.parse_args()
 
     return args
 
-def main():
-    args = parse_args()
-    print("NEUROBOTICS PLATFORM IS SOOOOOO MUCH FUN!!! HOLY SHIT I REALLLY LIKE IT!!")
+def test(popdir, runs_per_instance = 3):
+    global WEIGHT_SHAPE
+    global POPULATION_SIZE
+    dirFiles = os.listdir(popdir)
+    fileList = sorted([os.path.join(popdir, f) for f in os.listdir(popdir) if f.endswith('.json')])
+    POPULATION_SIZE = len(fileList)
+    experiment = ThrowingExperiment()
+    for i, json_file in enumerate(fileList):
+        with open(json_file, 'r') as f:
+            loaded_population = json.load(f)
+            w = loaded_population[0]["weights"]
+        if (i==0):
+            WEIGHT_SHAPE = w.shape
+            weights = np.zeros((POPULATION_SIZE, WEIGHT_SHAPE[0],WEIGHT_SHAPE[1]))
+        weights[i,] = w
+    results_dict = []
+
+    #running experimetn "run_per_instance" times and calculate average
+    for w in weights:
+        #stack weights so we can run in batches
+        w_stack = np.stack([w for i in range(runs_per_instance)], axis=0)
+        result = experiment.run_experiment(w_stack)
+        current_distances = []
+        avg = 0
+        for run in result:
+            current_distances.append(run["distance"])
+            avg = avg + run["distance"]
+        avg = avg / runs_per_instance
+        results_dict.append({
+                'weights': w,
+                'distances': current_distances,
+                'avg_distance': avg
+                })
+
+    result_file = os.path.join(popdir, "test_results.json")
+    with open(result_file, 'w') as f:
+        json.dump(results_dict, f, sort_keys=True, indent=4)
+
+def train(pop_file = ''):
     ct = datetime.datetime.now()
     output_dir = Path(os.path.join("output","{}_{}_{}-{}_{}".format(ct.year, ct.month, ct.day, ct.hour, ct.minute)))
     bestDistances = []
@@ -94,12 +135,13 @@ def main():
 
     #initialize weights either random or from previous experiments
     #POPULATION_SIZE MIGHT INCREASE WHEN LOADING FROM FILE
-    if(os.path.isfile(args.pop_file)):
+    if(os.path.isfile(pop_file)):
         current_population = load_population_from_json(args.pop_file)
         weights = mutatePopulation(current_population)
     else:
         weights = initPopulation(POPULATION_SIZE)
-        distance_file = os.path.join(output_dir,'distances_{}_{}.csv'.format(WEIGHT_SHAPE[0], WEIGHT_SHAPE[1]))
+        
+    distance_file = os.path.join(output_dir,'distances_{}_{}.csv'.format(WEIGHT_SHAPE[0], WEIGHT_SHAPE[1]))
 
     experiment = ThrowingExperiment()
 
@@ -125,6 +167,13 @@ def main():
 
         #mutate populatioin and get new weights
         weights = mutatePopulation(current_population)
+
+def main():
+    args = parse_args()
+    if args.test_dir == '':
+        train(args.pop_file)
+    else:
+        test(args.test_dir)
 
 
 if __name__ == '__main__':
