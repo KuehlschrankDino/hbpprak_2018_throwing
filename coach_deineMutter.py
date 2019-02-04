@@ -110,15 +110,14 @@ def test(popdir, runs_per_instance = 3):
         w_stack = np.stack([w for i in range(runs_per_instance)], axis=0)
         result = experiment.run_experiment(w_stack)
         current_distances = []
-        avg = 0
         for run in result:
             current_distances.append(run["distance"])
-            avg = avg + run["distance"]
-        avg = avg / runs_per_instance
+       
         results_dict.append({
                 'weights': w,
                 'distances': current_distances,
-                'avg_distance': avg
+                'mean_distance': np.mean(current_distances),
+                'standard_deviation': np.std(current_distances)
                 })
 
     result_file = os.path.join(popdir, "test_results.json")
