@@ -47,55 +47,53 @@
         },
         "content": [
           {
-            "type": "row",
+            "type": "column",
             "isClosable": true,
             "reorderEnabled": true,
             "title": "",
-            "height": 66.66666666666667,
-            "width": 52.94117647058824,
+            "width": 50,
             "content": [
               {
-                "type": "stack",
-                "width": 37.321294206170045,
-                "height": 99.99999999999999,
+                "type": "row",
                 "isClosable": true,
                 "reorderEnabled": true,
                 "title": "",
-                "activeItemIndex": 0,
+                "height": 51.724137931034484,
                 "content": [
                   {
-                    "type": "component",
-                    "title": "Environment Rendering",
-                    "id": "environment-rendering",
-                    "componentName": "angularModuleComponent",
-                    "componentState": {
-                      "module": "environmentRenderingModule",
-                      "angularDirective": "<environment-rendering />",
-                      "singleton": true
-                    },
-                    "isClosable": false,
-                    "customOptionsDirective": "<environment-rendering-options/>",
-                    "pwidth": 800,
-                    "pheight": 600,
-                    "reorderEnabled": true
-                  }
-                ]
-              },
-              {
-                "type": "column",
-                "isClosable": true,
-                "reorderEnabled": true,
-                "title": "",
-                "width": 62.67870579382995,
-                "content": [
+                    "type": "stack",
+                    "width": 50,
+                    "height": 56.367663344407525,
+                    "isClosable": true,
+                    "reorderEnabled": true,
+                    "title": "",
+                    "activeItemIndex": 0,
+                    "content": [
+                      {
+                        "type": "component",
+                        "title": "Environment Rendering",
+                        "id": "environment-rendering",
+                        "componentName": "angularModuleComponent",
+                        "componentState": {
+                          "module": "environmentRenderingModule",
+                          "angularDirective": "<environment-rendering />",
+                          "singleton": true
+                        },
+                        "isClosable": false,
+                        "customOptionsDirective": "<environment-rendering-options/>",
+                        "pwidth": 800,
+                        "pheight": 600,
+                        "reorderEnabled": true
+                      }
+                    ]
+                  },
                   {
                     "type": "stack",
                     "isClosable": true,
                     "reorderEnabled": true,
                     "title": "",
                     "activeItemIndex": 0,
-                    "width": 100,
-                    "height": 72.58064516129032,
+                    "width": 50,
                     "content": [
                       {
                         "type": "component",
@@ -113,31 +111,32 @@
                         "reorderEnabled": true
                       }
                     ]
-                  },
+                  }
+                ]
+              },
+              {
+                "type": "stack",
+                "isClosable": true,
+                "reorderEnabled": true,
+                "title": "",
+                "activeItemIndex": 0,
+                "height": 48.275862068965516,
+                "width": 100,
+                "content": [
                   {
-                    "type": "stack",
+                    "type": "component",
+                    "title": "TF Editor",
+                    "id": "transfer-function-editor",
+                    "componentName": "angularModuleComponent",
+                    "componentState": {
+                      "module": "exdFrontendApp",
+                      "angularDirective": "<transfer-function-editor />",
+                      "singleton": true
+                    },
+                    "pwidth": 900,
+                    "pheight": 700,
                     "isClosable": true,
-                    "reorderEnabled": true,
-                    "title": "",
-                    "activeItemIndex": 0,
-                    "height": 27.41935483870968,
-                    "content": [
-                      {
-                        "type": "component",
-                        "title": "Log Console",
-                        "id": "log-console",
-                        "componentName": "angularModuleComponent",
-                        "componentState": {
-                          "module": "exdFrontendApp",
-                          "angularDirective": "<log-console />",
-                          "singleton": true
-                        },
-                        "pwidth": 400,
-                        "pheight": 300,
-                        "isClosable": true,
-                        "reorderEnabled": true
-                      }
-                    ]
+                    "reorderEnabled": true
                   }
                 ]
               }

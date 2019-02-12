@@ -1,6 +1,8 @@
 # Imported Python Transfer Function
 @nrp.MapVariable("cur_grasp_state", initial_value="reset")
 @nrp.MapRobotSubscriber("grasp_state", Topic("/grasp_state", std_msgs.msg.String))
+@nrp.MapSpikeSink("output_5", nrp.brain.actors[5], nrp.population_rate)
+@nrp.MapSpikeSink("output_4", nrp.brain.actors[4], nrp.population_rate)
 @nrp.MapSpikeSink("output_3", nrp.brain.actors[3], nrp.population_rate)
 @nrp.MapSpikeSink("output_2", nrp.brain.actors[2], nrp.population_rate)
 @nrp.MapSpikeSink("output_1", nrp.brain.actors[1], nrp.population_rate)
@@ -25,7 +27,7 @@
 @nrp.MapRobotPublisher("arm_1", Topic("/robot/arm_1_joint/cmd_pos", std_msgs.msg.Float64))
 
 @nrp.Neuron2Robot()
-def simple_move_robot(t, grasp_state, hand_Thumb_Opposition, hand_Thumb_Helper, hand_thumb_distal, hand_thumb_flexion, hand_pinky_distal, hand_pinky_proximal, hand_ring_distal, hand_ring_proximal, hand_middle_distal, hand_middle_proximal, hand_index_distal, hand_index_proximal, arm_6, arm_5, arm_4, arm_3, arm_2, arm_1, cur_grasp_state, output_1, output_0, output_2, output_3):
+def simple_move_robot(t,output_5,output_4,output_3, output_2, output_1, output_0, grasp_state, hand_Thumb_Opposition, hand_Thumb_Helper, hand_thumb_distal, hand_thumb_flexion, hand_pinky_distal, hand_pinky_proximal, hand_ring_distal, hand_ring_proximal, hand_middle_distal, hand_middle_proximal, hand_index_distal, hand_index_proximal, arm_6, arm_5, arm_4, arm_3, arm_2, arm_1, cur_grasp_state):
     if grasp_state.value:
         cur_grasp_state.value = grasp_state.value.data
     import numpy as np
@@ -63,10 +65,13 @@ def simple_move_robot(t, grasp_state, hand_Thumb_Opposition, hand_Thumb_Helper, 
     elif(cur_grasp_state.value == "raise"):
         pass
     elif(cur_grasp_state.value == "throw"):
-        arm_2.send_message(std_msgs.msg.Float64(-5.0 + output_1.rate / 6.0))
-        arm_3.send_message(std_msgs.msg.Float64(-5.0 + output_2.rate / 6.0))
-        arm_5.send_message(std_msgs.msg.Float64(-5.0 + output_3.rate / 6.0))
-        grasp(output_0.rate / 50.0)
+        
+        arm_1.send_message(std_msgs.msg.Float64(output_1.rate / 500 * 20 -10))
+        arm_2.send_message(std_msgs.msg.Float64(output_2.rate / 500.0 * 2.8 - 1.4))
+        arm_3.send_message(std_msgs.msg.Float64(output_3.rate / 500.0 * 10 -5))
+        arm_4.send_message(std_msgs.msg.Float64(output_4.rate / 500.0 * 20 -10))
+        arm_5.send_message(std_msgs.msg.Float64(output_5.rate / 500.0 * 6 - 3))
+        grasp(output_0.rate / 500.0)
     elif(cur_grasp_state.value == "reset"):
         grasp(0)
         arm_1.send_message(std_msgs.msg.Float64(-1.705))

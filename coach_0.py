@@ -87,10 +87,11 @@ def parse_args():
 
     return args
 
-def test(popdir, runs_per_instance = 3):
+def test(popdir, runs_per_instance = 20):
     global WEIGHT_SHAPE
     global POPULATION_SIZE
     dirFiles = os.listdir(popdir)
+    print(dirFiles)
     fileList = sorted([os.path.join(popdir, f) for f in os.listdir(popdir) if f.endswith('.json')])
     POPULATION_SIZE = len(fileList)
     experiment = ThrowingExperiment()
@@ -101,6 +102,7 @@ def test(popdir, runs_per_instance = 3):
         if (i==0):
             WEIGHT_SHAPE = w.shape
             weights = np.zeros((POPULATION_SIZE, WEIGHT_SHAPE[0],WEIGHT_SHAPE[1]))
+            print(w)
         weights[i,] = w
     results_dict = []
 

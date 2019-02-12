@@ -14,13 +14,9 @@ def sensor2brain (t, input_2, input_1, input_0, cur_grasp_state, grasp_state):
         cur_grasp_state.value = grasp_state.value.data
 
     if(cur_grasp_state.value == "throw"):
-        state_proxy = ServiceProxy('/gazebo/get_model_state', GetModelState, persistent=True)
-        try:
-            current_cylinder_state = state_proxy("cylinder", "world")
-            input_0.amplitude = current_cylinder_state.pose.position.x
-            input_1.amplitude = current_cylinder_state.pose.position.y
-            input_2.amplitude = current_cylinder_state.pose.position.z
-        except rospy.ServiceException as exc:
-            clientLogger.info(str(exc))
+            input_0.amplitude = 30.5
+            input_1.amplitude = 0
+            input_2.amplitude = 0
+
     
  
