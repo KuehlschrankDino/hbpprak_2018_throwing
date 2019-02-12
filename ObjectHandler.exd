@@ -115,6 +115,8 @@ class FlyingCylinderState(State):
         start_time = rospy.Time.now()
         while not self.cylinder_lower_than(0.2) and (rospy.Time.now() - start_time) < rospy.Duration(self.max_hit_duration):
             elapsed_time = rospy.Time.now() - start_time
+            if(elapsed_time > rospy.Duration(6)):
+                self._grasp_state.publish(String("release"))
             if(elapsed_time > rospy.Duration(5)):
                 self._grasp_state.publish(String("throw"))
             elif(elapsed_time > rospy.Duration(4)):

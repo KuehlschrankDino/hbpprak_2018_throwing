@@ -63,10 +63,27 @@ def simple_move_robot(t, grasp_state, hand_Thumb_Opposition, hand_Thumb_Helper, 
     elif(cur_grasp_state.value == "raise"):
         pass
     elif(cur_grasp_state.value == "throw"):
+<<<<<<< Updated upstream
         arm_2.send_message(std_msgs.msg.Float64(-5.0 + output_1.rate / 6.0))
         arm_3.send_message(std_msgs.msg.Float64(-5.0 + output_2.rate / 6.0))
         arm_5.send_message(std_msgs.msg.Float64(-5.0 + output_3.rate / 6.0))
         grasp(output_0.rate / 50.0)
+=======
+
+        arm_1.send_message(std_msgs.msg.Float64(output_1.rate / 500 * 20 -10))
+        arm_2.send_message(std_msgs.msg.Float64(output_2.rate / 500.0 * 2.8 - 1.4))
+        arm_3.send_message(std_msgs.msg.Float64(output_3.rate / 500.0 * 10 -5))
+        arm_4.send_message(std_msgs.msg.Float64(output_4.rate / 500.0 * 20 -10))
+        arm_5.send_message(std_msgs.msg.Float64(output_5.rate / 500.0 * 6 - 3))
+        grasp(output_5.rate / 500.0) #hier stand auch output_5.rate und 0.0 beides mal ausprobieren eigentlich sollte output_0.rate
+    elif(cur_grasp_state.value == "release"):
+        arm_1.send_message(std_msgs.msg.Float64(output_1.rate / 500 * 20 -10))
+        arm_2.send_message(std_msgs.msg.Float64(output_2.rate / 500.0 * 2.8 - 1.4))
+        arm_3.send_message(std_msgs.msg.Float64(output_3.rate / 500.0 * 10 -5))
+        arm_4.send_message(std_msgs.msg.Float64(output_4.rate / 500.0 * 20 -10))
+        arm_5.send_message(std_msgs.msg.Float64(output_5.rate / 500.0 * 6 - 3))
+        grasp(0)
+>>>>>>> Stashed changes
     elif(cur_grasp_state.value == "reset"):
         grasp(0)
         arm_1.send_message(std_msgs.msg.Float64(-1.705))

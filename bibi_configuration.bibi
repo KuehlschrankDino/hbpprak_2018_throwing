@@ -7,4 +7,5 @@
   <bodyModel assetPath="arm_robot" customAsset="false">arm_robot_gripper.sdf</bodyModel>
   <transferFunction src="sensor2brain.py" xsi:type="PythonTransferFunction" />
   <transferFunction src="simple_move_robot.py" xsi:type="PythonTransferFunction" />
+  <transferFunction src="sensor2brain.py" xsi:type="PythonTransferFunction" />
 </bibi>
