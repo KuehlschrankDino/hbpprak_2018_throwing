@@ -7,13 +7,13 @@ import os
 WEIGHT_SHAPE = [3, 4]			
 distance_file = "distance_{}_{}.npy.".format(WEIGHT_SHAPE[0], WEIGHT_SHAPE[1])
 weights_file = "weights_{}_{}.npy".format(WEIGHT_SHAPE[0], WEIGHT_SHAPE[1])
-decay = 0.01
+decay = 0.002
 act_generation = 0
 
-def mutatePopulation(pop, keep=3, lr=0.5):
+def mutatePopulation(pop, keep=3, lr=1):
     new_weights = np.empty((len(pop), WEIGHT_SHAPE[0], WEIGHT_SHAPE[1]))
 	
-    lr *= act_generation * (1- decay)
+    lr -= act_generation *  decay
     for i, p in enumerate(pop):
         new_weights[i, ] = pop[-1]['weights']
         if(i < 3):
@@ -74,8 +74,8 @@ def key_func(e):
 def main():
     sim = ThrowingSim()
     print(sim.initialized())
-    populationSize = 2
-    num_generations = 5
+    populationSize = 20
+    num_generations = 500
     best_distance = 0
     pop = []
     if(os.path.isfile(distance_file) and os.path.isfile(weights_file)):

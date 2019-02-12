@@ -2,6 +2,7 @@
 <ns1:bibi xmlns:ns1="http://schemas.humanbrainproject.eu/SP10/2014/BIBI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<ns1:brainModel>
 		<ns1:file>idle_brain.py</ns1:file>
+		<ns1:populations from="0" population="population_0" step="1" to="1" xsi:type="ns1:Range"/>
 	</ns1:brainModel>
 	<ns1:bodyModel assetPath="arm_robot" customAsset="false">arm_robot_gripper.sdf</ns1:bodyModel>
 	<ns1:transferFunction src="simple_move_robot.py" xsi:type="ns1:PythonTransferFunction"/>
