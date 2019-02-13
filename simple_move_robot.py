@@ -75,7 +75,7 @@ def simple_move_robot(t, output_1, output_0, output_2, output_3, output_4, outpu
         arm_1.send_message(std_msgs.msg.Float64(-5.0 + output_4.rate ))
         arm_4.send_message(std_msgs.msg.Float64(-5.0 + output_5.rate ))
         arm_6.send_message(std_msgs.msg.Float64(-5.0 + output_6.rate ))
-        grasp(output_0.rate )
+        grasp(output_0.rate/5 - 1 )
     elif(cur_grasp_state.value == "reset"):
         grasp(0)
         arm_1.send_message(std_msgs.msg.Float64(-1.705))

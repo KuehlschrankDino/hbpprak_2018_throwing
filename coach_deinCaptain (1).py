@@ -19,7 +19,7 @@ from sklearn.preprocessing import normalize
 #experiments settings
 WEIGHT_SHAPE = [3, 7]	
 N_GENERATIONS = 100
-POPULATION_SIZE = 25
+POPULATION_SIZE = 10
 LR_DECAY = 0.7
 LR = 1
 
@@ -27,8 +27,8 @@ LR = 1
 def mutatePopulation(pop, local_max_counter,current_gen,weights_mapping):
     global LR
     new_weights_mapping= []
-    if(len(pop)>50):
-        pop = pop[:50]
+    if(len(pop)>18):
+        pop = pop[:18]
     if(current_gen>0):
         new_weights = np.empty((len(pop)*2, WEIGHT_SHAPE[0], WEIGHT_SHAPE[1]))
     else:
@@ -44,7 +44,7 @@ def mutatePopulation(pop, local_max_counter,current_gen,weights_mapping):
                     'oldweights': [[0 for x in range(WEIGHT_SHAPE[1] )] for y in range(WEIGHT_SHAPE[0])],
                     'distance': 0
                     })
-        elif(i < 15):
+        elif(i < 3):
             for ii in range(3): 
                 x = np.random.randint(WEIGHT_SHAPE[0])
                 y = np.random.randint(WEIGHT_SHAPE[1])
@@ -54,7 +54,7 @@ def mutatePopulation(pop, local_max_counter,current_gen,weights_mapping):
                     'oldweights': pop[i]['weights'],
                     'distance': pop[i]['distance']
                     })
-        elif(i < 40 ):
+        elif(i < 15 ):
             value = np.random.randint(len(pop))
             new_weights[i, ]= pop[value]['weights']+ np.random.uniform(-1, 1, (WEIGHT_SHAPE[0], WEIGHT_SHAPE[1])) * LR
             new_weights_mapping.append({
