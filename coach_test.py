@@ -3,7 +3,11 @@ from simulation import ThrowingSim
 import numpy as np
 import os
 
+<<<<<<< HEAD
 WEIGHT_SHAPE = [4, 4]
+=======
+WEIGHT_SHAPE = [3, 4]
+>>>>>>> 4de7016a54c469e0daa29849e0caab3515e0f0a0
 distance_file = "distance_{}_{}.npy.".format(WEIGHT_SHAPE[0], WEIGHT_SHAPE[1])
 weights_file = "weights_{}_{}.npy".format(WEIGHT_SHAPE[0], WEIGHT_SHAPE[1])
 

@@ -93,16 +93,22 @@ class NewCylinderState(State):
         self._cylinder_msg.initial_pose.position.y = -0.25321
         self._cylinder_msg.initial_pose.position.z = 1.12015
         self._cylinder_msg.reference_frame = "world"
+<<<<<<< HEAD
         self.pub = rospy.Publisher('/state', String, queue_size=10)
         self.pub.publish("init_pos")
+=======
+>>>>>>> 4de7016a54c469e0daa29849e0caab3515e0f0a0
 
     def execute(self, userdata):
-        self.pub.publish("init_pos")
         self._spawn_proxy(self._cylinder_msg)
         return 'success'
 
 class FlyingCylinderState(State):
+<<<<<<< HEAD
     def __init__(self, cylinder_name, rate=1., outcomes=['success', 'aborted'], max_hit_duration=20):
+=======
+    def __init__(self, cylinder_name, rate=1., outcomes=['success', 'aborted'], max_hit_duration=10):
+>>>>>>> 4de7016a54c469e0daa29849e0caab3515e0f0a0
         super(FlyingCylinderState, self).__init__(outcomes=outcomes)
         self._rate = rospy.Rate(rate)
         self._cylinder_name = cylinder_name
@@ -111,16 +117,41 @@ class FlyingCylinderState(State):
         self._delete_proxy = ServiceProxy('/gazebo/delete_model',
                                          DeleteModel, persistent=True)
         self._distance_topic = rospy.Publisher('/cylinder_distance', Float32, queue_size=10)
+<<<<<<< HEAD
         self.max_hit_duration=20
+=======
+        self._grasp_state = rospy.Publisher("/grasp_state", String, queue_size=10)
+        self.max_hit_duration=8
+>>>>>>> 4de7016a54c469e0daa29849e0caab3515e0f0a0
 
     def execute(self, userdata):
         start_time = rospy.Time.now()
         while not self.cylinder_lower_than(0.2) and (rospy.Time.now() - start_time) < rospy.Duration(self.max_hit_duration):
+<<<<<<< HEAD
+=======
+            elapsed_time = rospy.Time.now() - start_time
+            if(elapsed_time > rospy.Duration(5)):
+                self._grasp_state.publish(String("throw"))
+            elif(elapsed_time > rospy.Duration(4)):
+                self._grasp_state.publish(String("turn_hand"))
+            elif(elapsed_time > rospy.Duration(3)):
+                self._grasp_state.publish(String("grasp"))
+            elif(elapsed_time > rospy.Duration(1)):
+                self._grasp_state.publish(String("approach"))
+            else:
+                self._grasp_state.publish(String("reset"))
+>>>>>>> 4de7016a54c469e0daa29849e0caab3515e0f0a0
             self._rate.sleep()
         pub = rospy.Publisher('/state', String, queue_size=10)
         pub.publish("thrown")
         cylinder_pos = self.get_cylinder_distance()
+        self._grasp_state.publish(String("reset"))
+        start_time = rospy.Time.now()
+        while(rospy.Time.now() - start_time) < rospy.Duration(2):
+            self._grasp_state.publish(String("reset"))
+            self._rate.sleep()
         clientLogger.advertise("Cylinder distance: {}".format(cylinder_pos))
+        
         self._distance_topic.publish(Float32(cylinder_pos))
         self._delete_proxy(self._cylinder_name)
         return 'success'
@@ -140,7 +171,10 @@ class FlyingCylinderState(State):
             clientLogger.info(str(exc))
             return False
         return current_cylinder_state.pose.position.z < z_threshold
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4de7016a54c469e0daa29849e0caab3515e0f0a0
 
 with sm:
     StateMachine.add(
