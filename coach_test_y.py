@@ -12,8 +12,7 @@ lr = 0.5
 
 def mutatePopulation(pop, keep=3):
     new_weights = np.empty((len(pop), WEIGHT_SHAPE[0], WEIGHT_SHAPE[0]))
-	
-	lr *= (1 - decay)
+    lr *= (1 - decay)
     for i, p in enumerate(pop):
 		new_weights[i, ] = pop[-1]['weights']
         if(i < 3):

@@ -19,12 +19,12 @@ def mutate_population(pop, keep=3, lr=0.5):
         if(i < 4):
             for ii in range(3): 
                 x = np.random.randint(WEIGHT_SHAPE)
-                new_weights[i,x] += np.power(-np.random.rand(1), np.random.randint(2))[0] * lr
+                new_weights[i,x] += np.random.rand(1) * np.power(-1, np.random.randint(2))[0] * lr
         elif (i < 6):
             new_weights[i, ] = pop[-2]['weights']
             for ii in range(3): 
                 x = np.random.randint(WEIGHT_SHAPE)
-                new_weights[i,x] += np.power(-np.random.rand(1), np.random.randint(2))[0] * lr 
+                new_weights[i,x] += np.random.rand(1) * np.power(-1, np.random.randint(2))[0] * lr 
                 
         else: 
             new_weights[i, ] = np.random.rand(WEIGHT_SHAPE) * 5
